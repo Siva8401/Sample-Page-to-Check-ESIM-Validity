@@ -3,42 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Device Information</title>
-<style>
-  /* Basic styling */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  .result-box {
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-  }
-</style>
+<title>Device Information MERCYDA</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
 <div class="container">
-  <h2>DEVICE E-SIM CHECK MERCYDA</h2>
+  <h2>Device Information</h2>
   <input type="text" id="iccidInput" placeholder="Enter ICCID">
   <button onclick="searchICCID()">Search</button>
   <div id="resultContainer" class="result-box" style="display:none;">
@@ -47,48 +18,7 @@
   </div>
 </div>
 
-<script>
-function searchICCID() {
-  var iccid = document.getElementById("iccidInput").value.trim();
-  
-  if (!iccid) {
-    alert("Please enter ICCID.");
-    return;
-  }
-  
-  fetch("https://console.mercydatrack.com/m2mportal/devices/iccid/" + iccid)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.status === "success") {
-        displayResult(data.data);
-      } else {
-        throw new Error("API returned an error");
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching data:", error);
-      alert("Error fetching data. Please try again later.");
-    });
-}
-
-function displayResult(data) {
-  var resultContainer = document.getElementById("resultContainer");
-  var resultElement = document.getElementById("result");
-  
-  resultElement.innerHTML = ""; // Clear previous results
-  
-  Object.keys(data).forEach(key => {
-    resultElement.innerHTML += "<p>" + key + ": " + data[key] + "</p>";
-  });
-  
-  resultContainer.style.display = "block"; // Show result container
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

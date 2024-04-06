@@ -14,11 +14,7 @@ function searchICCID() {
       return response.json();
     })
     .then(data => {
-      if (data.status === "success") {
-        displayResult(data.data);
-      } else {
-        throw new Error("API returned an error");
-      }
+      displayResult(data);
     })
     .catch(error => {
       console.error("Error fetching data:", error);
@@ -32,10 +28,19 @@ function displayResult(data) {
   
   resultElement.innerHTML = ""; // Clear previous results
   
-  // Display each key-value pair in the data
-  Object.keys(data).forEach(key => {
-    resultElement.innerHTML += "<p>" + key + ": " + data[key] + "</p>";
-  });
-  
-  resultContainer.style.display = "block"; // Show result container
+  if (data.status === "success") {
+    resultElement.innerHTML += "<p>Primary TSP MSISDN: " + data.data.Primary_TSP_MSISDN + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP MSISDN: " + data.data.Fallback_TSP_MSISDN + "</p>";
+    resultElement.innerHTML += "<p>Primary TSP Name: " + data.data.Primary_TSP_Name + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP Name: " + data.data.Fallback_TSP_Name + "</p>";
+    resultElement.innerHTML += "<p>Primary TSP Validity: " + data.data.Primary_TSP_Validity + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP Validity: " + data.data.Fallback_TSP_Validity + "</p>";
+    resultElement.innerHTML += "<p>Primary Status: " + data.data.PrimaryStatus + "</p>";
+    resultElement.innerHTML += "<p>Fallback Status: " + data.data.FallbackStatus + "</p>";
+    resultElement.innerHTML += "<p>IMEI No: " + data.data.ImeiNo + "</p>";
+    resultContainer.style.display = "block"; // Show result container
+  } else {
+    resultElement.innerHTML = "<p>No data found for the given ICCID.</p>";
+    resultContainer.style.display = "none"; // Hide result container
+  }
 }

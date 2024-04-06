@@ -38,7 +38,7 @@
 <body>
 
 <div class="container">
-  <h2>Device Information</h2>
+  <h2>DEVICE E-SIM CHECK MERCYDA</h2>
   <input type="text" id="iccidInput" placeholder="Enter ICCID">
   <button onclick="searchICCID()">Search</button>
   <div id="resultContainer" class="result-box" style="display:none;">
@@ -49,15 +49,13 @@
 
 <script>
 function searchICCID() {
-  var iccid = document.getElementById("iccidInput").value;
+  var iccid = document.getElementById("iccidInput").value.trim();
   
-  // Make sure ICCID is not empty
-  if(iccid.trim() === "") {
+  if (!iccid) {
     alert("Please enter ICCID.");
     return;
   }
   
-  // Make AJAX request to fetch data
   fetch("https://console.mercydatrack.com/m2mportal/devices/iccid/" + iccid)
     .then(response => {
       if (!response.ok) {
@@ -66,8 +64,8 @@ function searchICCID() {
       return response.json();
     })
     .then(data => {
-      if(data.status === "success") {
-        displayResult(data);
+      if (data.status === "success") {
+        displayResult(data.data);
       } else {
         throw new Error("API returned an error");
       }
@@ -82,18 +80,12 @@ function displayResult(data) {
   var resultContainer = document.getElementById("resultContainer");
   var resultElement = document.getElementById("result");
   
-  // Clear previous results
-  resultElement.innerHTML = "";
+  resultElement.innerHTML = ""; // Clear previous results
   
-  resultElement.innerHTML += "<p>Primary TSP MSISDN: " + data.data.Primary_TSP_MSISDN + "</p>";
-  resultElement.innerHTML += "<p>Fallback TSP MSISDN: " + data.data.Fallback_TSP_MSISDN + "</p>";
-  resultElement.innerHTML += "<p>Primary TSP Name: " + data.data.Primary_TSP_Name + "</p>";
-  resultElement.innerHTML += "<p>Fallback TSP Name: " + data.data.Fallback_TSP_Name + "</p>";
-  resultElement.innerHTML += "<p>Primary TSP Validity: " + data.data.Primary_TSP_Validity + "</p>";
-  resultElement.innerHTML += "<p>Fallback TSP Validity: " + data.data.Fallback_TSP_Validity + "</p>";
-  resultElement.innerHTML += "<p>Primary Status: " + data.data.PrimaryStatus + "</p>";
-  resultElement.innerHTML += "<p>Fallback Status: " + data.data.FallbackStatus + "</p>";
-  resultElement.innerHTML += "<p>IMEI No: " + data.data.ImeiNo + "</p>";
+  Object.keys(data).forEach(key => {
+    resultElement.innerHTML += "<p>" + key + ": " + data[key] + "</p>";
+  });
+  
   resultContainer.style.display = "block"; // Show result container
 }
 </script>

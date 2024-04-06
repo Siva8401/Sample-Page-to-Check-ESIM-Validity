@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Device Information</title>
+<style>
+  /* Basic styling */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  .result-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Device Information</h2>
+  <input type="text" id="iccidInput" placeholder="Enter ICCID">
+  <button onclick="searchICCID()">Search</button>
+  <div id="resultContainer" class="result-box" style="display:none;">
+    <h3>Device Information</h3>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+function searchICCID() {
+  var iccid = document.getElementById("iccidInput").value;
+  
+  // Make sure ICCID is not empty
+  if(iccid.trim() === "") {
+    alert("Please enter ICCID.");
+    return;
+  }
+  
+  // Make AJAX request to fetch data
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        displayResult(xhr.responseText);
+      } else {
+        alert("Error: " + xhr.status);
+      }
+    }
+  };
+  xhr.open("GET", "https://console.mercydatrack.com/m2mportal/devices/iccid/" + iccid, true);
+  xhr.send();
+}
+
+function displayResult(responseText) {
+  var data = JSON.parse(responseText);
+  var resultContainer = document.getElementById("resultContainer");
+  var resultElement = document.getElementById("result");
+  
+  // Clear previous results
+  resultElement.innerHTML = "";
+  
+  if(data.status === "success") {
+    resultElement.innerHTML += "<p>Primary TSP MSISDN: " + data.data.Primary_TSP_MSISDN + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP MSISDN: " + data.data.Fallback_TSP_MSISDN + "</p>";
+    resultElement.innerHTML += "<p>Primary TSP Name: " + data.data.Primary_TSP_Name + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP Name: " + data.data.Fallback_TSP_Name + "</p>";
+    resultElement.innerHTML += "<p>Primary TSP Validity: " + data.data.Primary_TSP_Validity + "</p>";
+    resultElement.innerHTML += "<p>Fallback TSP Validity: " + data.data.Fallback_TSP_Validity + "</p>";
+    resultElement.innerHTML += "<p>Primary Status: " + data.data.PrimaryStatus + "</p>";
+    resultElement.innerHTML += "<p>Fallback Status: " + data.data.FallbackStatus + "</p>";
+    resultElement.innerHTML += "<p>IMEI No: " + data.data.ImeiNo + "</p>";
+    resultContainer.style.display = "block"; // Show result container
+  } else {
+    resultElement.innerHTML = "<p>No data found for the given ICCID.</p>";
+    resultContainer.style.display = "none"; // Hide result container
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,24 +1,887 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Device Information</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer" />
+  <title>PYMCC</title>
 
-<div class="container">
-  <h2>Device Information</h2>
-  <input type="text" id="iccidInput" placeholder="Enter ICCID">
-  <button onclick="searchICCID()">Search</button>
-  <div id="resultContainer" class="result-box" style="display:none;">
-    <h3>Device Information</h3>
-    <div id="result"></div>
-  </div>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="css/adminlte.min.css">
+<link rel="stylesheet" href="css/style.css">
+<!-- daterange picker -->
+<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+
+<!-- Tempusdominus Bootstrap 4 (may be used for date and time picker) -->
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+
+<!--For Alert Notification Popup-->
+<link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+
+<style>
+	#main-sidebar { background-color: #E1483A; }
+</style>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+
+<!-- date-range-picker -->
+<script src="plugins/moment/moment_updated.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 used for date and time picker also-->
+<script src="plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js"></script>
+
+<!--For Alert Notification Popup-->
+<script src="plugins/toastr/toastr.min.js"></script>
+<!-- Common Input Validation -->
+<script src="js/commonValidation.js"></script>
+
+
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse" style="font-size:12px;">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Home</a>      </li>      
+    </ul>
+
+    <!-- Right navbar links -->
+	
+    <ul class="navbar-nav ml-auto"> 
+			<li class="nav-item">
+			<a href="logout.php" class="nav-link">
+				<p>Logout</p>
+			</a>		</li>	        
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside id="main-sidebar" style="background-color:#2C394B" class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      
+      <span class="brand-text" style="font-weight:bold; margin-left:40px; color:#f5deb3">PUDUCHERRY</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="images/avatar5.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Welcome Sivachandran As <br><b><span style="color:#a8d5e5">MCC Operator</span></b></a>
+        </div>
+      </div>
+	  
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+		            <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Masters              
+							<i class="right fas fa-angle-left"></i>
+				</p>
+				 </a>  
+				 <ul class="nav nav-treeview">
+			   
+			  <li class="nav-item">
+                <a href="state_mmi.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>State</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="city_mmi.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>City</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="poi_mmi.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Geofence POI</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="route_mmi.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Route</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="route_plan.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Route Plan</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="geofence.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Geofence Places
+
+</p>
+                </a>
+              </li>
+			  			</ul>    
+          </li>
+		            <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Manage Devices              
+							<i class="right fas fa-angle-left"></i>
+				</p>
+				 </a>  
+				 <ul class="nav nav-treeview">
+			   
+			  <li class="nav-item">
+                <a href="device.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Devices</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_status.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Status</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_data.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Data</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_activation_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Activation Log</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_health_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Health Log</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_battery_health_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Battery Health Log</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="ota_control_command.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>OTA Commands</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="device_data_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Data Log</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="control_command_logs.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Control Command Logs</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="check_location_history_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Check Raw Data</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="check_location_history_sos_log.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Check SOS Log</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="deactivate.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Deactive</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="update_device.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Device</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="activate.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="esim_validaty.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ESIM Validaty</p>
+                </a>
+              </li>
+			  			</ul>    
+          </li>
+		            <li class="nav-item">
+            <a href="device_tagging.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Tagged              
+			</p></a>          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Tracking              
+							<i class="right fas fa-angle-left"></i>
+				</p>
+				 </a>  
+				 <ul class="nav nav-treeview">
+			   
+			  <li class="nav-item">
+                <a href="current_location.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Current Location</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="view_all_vehicles_mmi_v1.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View All Vehicles</p>
+                </a>
+              </li>
+			  			</ul>    
+          </li>
+		            <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Reports              
+							<i class="right fas fa-angle-left"></i>
+				</p>
+				 </a>  
+				 <ul class="nav nav-treeview">
+			   
+			  <li class="nav-item">
+                <a href="alert_emergency.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Emergency</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_route_deviation.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Route Deviation</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_overspeed.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Overspeed</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_non_stoppages.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Non stoppages</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_harsh_acceleration.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Harsh Acceleration</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_harsh_braking.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Harsh Braking</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_state_boundary.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entry/Exit State Boundary</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_city_boundary.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entry/Exit City Boundary</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_prohibited_area.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Prohibited Area</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_tamper.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehicle Battery Disconnect</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_device_offline.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Device Offline</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_geofence.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entry/Exit Geofence</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_distance.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Distance Report</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_ignition.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ignition</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_sos_tamper.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Emergency Wire Disconnect</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_stoppages.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Stoppages</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_trip_sheet.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Trip Report
+
+</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_geofence_time_violation.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Geofence Time Violation</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="report_geofence_speed_violation.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Geofence Speed Violation</p>
+                </a>
+              </li>
+			     
+			  <li class="nav-item">
+                <a href="alerts.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Alerts</p>
+                </a>
+              </li>
+			  			</ul>    
+          </li>
+		            <li class="nav-item">
+            <a href="change_password.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Change Password              
+			</p></a>          <li class="nav-item">
+            <a href="dashboard_officer.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">VTS Dashboard              
+			</p></a>          <li class="nav-item">
+            <a href="complaints.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Complaints              
+			</p></a>          <li class="nav-item">
+            <a href="dashboard_mcc.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">MCC Dashboard              
+			</p></a>          <li class="nav-item">
+            <a href="audit_trail_log.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Audit Trail              
+			</p></a>          <li class="nav-item">
+            <a href="vehicle_utilisation.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Vehicle Utilisation              
+			</p></a>          <li class="nav-item">
+            <a href="road_safety_measure_mmi.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Road Safety Measure              
+			</p></a>          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">MCC CONSOLE              
+			</p></a>          <li class="nav-item">
+            <a href="test_vahan.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">VAHAN DATA              
+			</p></a>          <li class="nav-item">
+            <a href="sop_settings_new.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">SOP              
+			</p></a>          <li class="nav-item">
+            <a href="device_activation_request.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Device Activation Request              
+			</p></a>          <li class="nav-item">
+            <a href="dashboard_v10.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Dashboard V10              
+			</p></a>          <li class="nav-item">
+            <a href="stack_holder_dashboard.php" class="nav-link">
+              <i style="color:#f5deb3" class="nav-icon fas fa-tachometer-alt fa-2x"></i>
+              <p style="color:#f5deb3">Stack Holder Dashboard              
+			</p></a>		  
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  
+  
+<!--For Alert Notification Popup Start -->  
+<script>
+$(function() {
+	// 20220201: Commented the following lines. After vapt, we can uncomment 
+	//  setInterval(function(){
+	//  	Alert_notifications();
+    //  }, 10000);
+	 
+	//  function Alert_notifications()
+ 	//  {
+	//  	//toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
+	// 	xhttp = new XMLHttpRequest();
+	// 	xhttp.onreadystatechange = function() {
+	// 		if (this.readyState == 4 && this.status == 200) {
+	// 			slno_alert = 0;
+	// 			alert_js_obj = JSON.parse(this.responseText);
+	// 			if(alert_js_obj.length > 0) {
+	// 				alert_list = '';
+	// 				for(i=0; i < alert_js_obj.length; i++) {
+						
+	// 					var alert_name = '';
+					
+	// 					if(alert_js_obj[i]['alert_code'] == 'ALR-SOS')
+	// 						alert_name = 'Emergency Alert';
+	// 					else if(alert_js_obj[i]['alert_code'] == 'ALR-OVRS')
+	// 						alert_name = 'Over Speed';
+	// 					else if(alert_js_obj[i]['alert_code'] == 'ALR-RD')
+	// 						alert_name = 'Route Deviation';
+	// 					else if(alert_js_obj[i]['alert_code'] == 'ALR-STMP')
+	// 						alert_name = 'Emergency Wire Cut';
+	// 					else if(alert_js_obj[i]['alert_code'] == 'ALR-GEOFENCE-SPEED-V')
+	// 						alert_name = 'Geofence Speed Violation';	
+							
+	// 					var address = '';
+						
+	// 					if(alert_js_obj[i]['address'] != null)
+	// 						address = alert_js_obj[i]['address'];
+					
+	// 					toastr.error('<h6>'+alert_name+'</h6><p>'+alert_js_obj[i]['vehicle_number']+' , '+alert_js_obj[i]['created_datetime_val']+' , '+address+'</p>');						
+						
+	// 				}
+					
+	// 			}
+	// 		}
+	// 	};
+	// 	xhttp.open("GET", "ajax/popup.php?action=get_alerts", true);
+	// 	xhttp.send();				
+	//  }
+});	
+</script>
+<!--For Alert Notification Popup End -->
+<style>
+    .page_loader{
+        position: fixed;
+        z-index: 99999;
+        background: rgba(255,255,255,.5);
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+<style id="onPrint-style">
+    table{
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+
+
+
+    @media print  {
+        input{border: none !important;}
+    }
+
+</style>
+<div class="page_loader" style="display:none;">
+    <div class="d-flex page_loader_content justify-content-center">
+        <img src="https://mc.py.gov.in/assets/img/ajax-loader.gif" style="width: 60px; padding-top: 210px;">
+    </div>
+</div>
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>ESIM Validaty Check</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="dashboard_itms.php">Home</a></li>
+                <li class="breadcrumb-item active">ESIM Validaty Check</li>
+                </ol>
+            </div>
+            </div>
+        </div><!-- /.container-fluid -->
+	</section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+	        <div class="card-body">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <div class="alert" role="alert">
+                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <form id="esimDataForm">
+                            <div class="mb-3">
+                                <label for="esim_provider" class="form-label">ESIM Provider*</label>
+                                <select name="esim_provider" id="esim_provider" class="form-control form-control-sm">
+                                    <option value="" selected disabled>Select ESIM Provider</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imei" class="form-label">IMEI</label>
+                                <input type="number" autocomplete="off" required class="form-control form-control-sm" id="imei" name="imei">
+                            </div>
+                            <button type="submit" value="Search" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card">
+	        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <a href="javascript:void(0)" id="printBtn" onclick="popup()">
+                            <i class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="dataCardBodyDiv">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <h2>VAHAN DETAILS</h2>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-10" id="vahan_details">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <h2>ESIM DETAILS</h2>
+                        </div>
+                    </div>
+
+                    <table class="table table-sm table-bordered" id="total_details">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Field Name</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
-<script src="script.js"></script>
+<script type="text/javascript">
+    // var copyData = '{';
+    var printData = '';
+    $(document).ready(function (){
+        
+        $('.alert').hide();
+        $('#total_details').parent().parent().hide();
+        get_esim_list();
+        $('#esimDataForm').on('submit', function (e){
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('type', 'send');
+            $.ajax({
+                url: 'ajax/ajax_check_esim_validaty.php',
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    $('.page_loader').show();
+                },
+                success: function(data) {
+                    $('.page_loader').hide();
+                    $('.alert').show();
+                    if(data.status == 'success'){
+                        $('.alert').addClass('alert-success');
+                        $('.alert').text(data.message);
+                    } else{
+                        $('.alert').addClass('alert-warning');
+                        $('.alert').text(data.message);
+                    }
+                    $('#total_details').parent().parent().show();
+                    var tr = '';
+                    var dataFull;
+                    if((data.m2m_api.apiResponseCode == 'LCM_001') || (data.m2m_api.apiResponseCode == '001')){
+                        if(data.m2m_api.resultObj != undefined){
+                            dataFull = data.m2m_api.resultObj[0];
+                        } else if(data.m2m_api.sim_entity != undefined) {
+                            dataFull = data.m2m_api.sim_entity[0];
+                        }
+                    } else if(data.m2m_api.code == '200'){
+                        dataFull = data.m2m_api.data;
+                    } else if(data.m2m_api.apiResponseCode == '200'){
+                        dataFull = data.m2m_api;
+                    }
+                    
+                    tr=''; var count = 0;
+                    var length = Object.keys(dataFull).length;
+                    $.each(dataFull, function (index, value){
+                        count++;
+                        tr += '<tr>'+
+                                '<td>'+count+'</td>'+
+                                '<th>'+index+'</th>'+
+                                '<td>'+value+'</td>'+
+                            '</tr>';
+                    });
+                    $('#total_details tbody').html(tr);
+                    vahanDataDisplay(data.vahan_data, 'vahan_details');
+                    printData = '<html><head><style>' + $('#onPrint-style').html() + '</style><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"></head><body>' + $('#dataCardBodyDiv').html() + '</body></html>';
+                },
+                error: function(errResp) {
+                    console.log(errResp);
+                }
+            });
+        });
+    });
 
+    function popup() {
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "absolute", "top": "-1000000px" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write(printData);
+        frameDoc.document.close();
+        setTimeout(function() {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+        return true;
+    }
+
+    function vahanDataDisplay(vahanData, divID){
+        var html = '<table class="table table-bordered" cellspacing="0" cellpadding="0">'+
+                    '<tbody>'+
+                        '<tr>'+
+                            '<th scope="row">Chassis No</th>'+
+                            '<td>' + vahanData.chassisNo + '</td>'+
+                            '<th scope="row">Date Of Registration</th>'+
+                            '<td>' + vahanData.date + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">Device Activation Status</th>'+
+                            '<td>' + vahanData.deviceActivationStatus + '</td>'+
+                            '<th scope="row">Device Serial No</th>'+
+                            '<td>' + vahanData.deviceSerialno + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">Engine No</th>'+
+                            '<td>' + vahanData.engineNo + '</td>'+
+                            '<th scope="row">Fitment CentreName</th>'+
+                            '<td>' + vahanData.fitmentCentreName + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">ICCID</th>'+
+                            '<td>' + vahanData.iccId + '</td>'+
+                            '<th scope="row">Imei No</th>'+
+                            '<td>' + vahanData.imeiNo + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">Maker Name</th>'+
+                            '<td>' + vahanData.makerName + '</td>'+
+                            '<th scope="row">Model Name</th>'+
+                            '<td>' + vahanData.modelName + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">Owner Name</th>'+
+                            '<td>' + vahanData.ownerName + '</td>'+
+                            '<th scope="row">Registration No</th>'+
+                            '<td>' + vahanData.regnNo + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">TAC No</th>'+
+                            '<td>' + vahanData.tacNo + '</td>'+
+                            '<th scope="row">TAC ValidUpto</th>'+
+                            '<td>' + vahanData.tacValidUpto + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">Vehicle Class</th>'+
+                            '<td>' + vahanData.vehClass + '</td>'+
+                        '</tr>'+
+                    '</tbody>'+
+                '</table>';
+        $(document).find('#'+divID).html(html);
+    }
+
+    function copyContent(content = ''){
+        if(content == ''){
+            content = copyData;
+        }
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(content)
+                .then(function () {
+                    // Clipboard write succeeded
+                    // You can add your success handling code here
+                })
+                .catch(function (err) {
+                    console.error('Unable to write to clipboard: ', err);
+                });
+        } else {
+            console.error('Clipboard API not available in this browser.');
+        }
+    }
+
+    function get_esim_list(){
+        var formData = new FormData();
+        formData.append('type', 'esim_list');
+        $.ajax({
+            url: 'ajax/ajax_check_esim_validaty.php',
+            type: "POST",
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                $('.page_loader').show();
+            },
+            success: function(data) {
+                $('.page_loader').hide();
+                var option = '<option value="" selected disabled>Select ESIM Provider</option>';
+                if(data.provider_list.length > 0){
+                    $.each(data.provider_list, function (index, value){
+                        option += '<option value="' + value.id + '">' + value.service_provider_name + '</option>';
+                    });
+                }
+                $("#esim_provider").html(option);
+            },
+            error: function(errResp) {
+                console.log(errResp);
+            }
+        });
+    }
+</script> <footer class="main-footer">    
+    All rights reserved
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 </body>
 </html>
